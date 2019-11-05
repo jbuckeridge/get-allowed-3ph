@@ -1,0 +1,107 @@
+3 PHONON TRANSITIONS CODE
+
+**********************************************************************
+
+NOTE: 
+
+This program is a work in process!! It is slow, annoying etc.
+Please bear with me.
+
+It only supports frequencies in cm-1. It cannot handle symmetry.
+
+Future plans: more unit support. Read in band.yaml and produce plot of
+transitions on a phonon band plot. Rewrite in python, add symmetry.
+Any suggestions? :)
+
+J. Buckeridge (j.buckeridge@lsbu.ac.uk) Nov. 2019
+
+**********************************************************************
+
+DESCRIPTION:
+
+A program to determine the allowed phonon decays and collisions, given
+a set of phonon frequencies calculated on a grid of q-points. The
+format for input is a mesh.yaml file created by the Phonopy code.
+
+The point of this code is to ascertain which phonon modes are involved
+in transitions in 3-phonon processes that determine thermal
+conductivity. Whether the aao, aaa, aoo etc processes (a = acoustic, o
+= optical) dominate in a 3-phonon process could be inferred from the
+results of this program, but of course the strengths of the
+transitions are unknown. A full 3-phonon calculation needs to be
+carried out to determine these strengths.
+
+See the paper PRB 91 094306 (2015), where A. Togo et al describe the
+theory behind the 3-phonon interaction calculations encoded in
+Phono3py. What this code determines is the relation \Delta(q + q' +
+q") in Eq. 10, and the delta function delta(omega - omega' - omega")
+in Eq. 11. In this way, conditions for which phonon decays are allowed
+are determined. Of course, when a phonon decay is allowed, so is a
+phonon collision (with e.g. omega and omega' swapped).
+
+This code reads in the q vectors and frequencies omega at each q, so
+that it finds a set of (q,omega) points. It also reads in the
+reciprocal lattice vectors. It then finds the combinations of q that
+satisfy the quasimomentum conservation criterion:
+
+q - q' - q" - G = 0,
+
+where G is a reciprocal lattice vector. The max G checked: G = +/- (3
+b1 + 3 b2 + 3 b3), where bi are the reciprocal lattice vectors.
+
+When quasimomentum conservation is obeyed, the code then checks for
+energy conservation omega = omega' + omega". If this is obeyed, a
+transition has been found.
+
+As symmetry is not used, redundancies occur in the output. These are
+checked for and removed.
+
+**********************************************************************
+
+INPUT:
+
+The code reads in a mesh.yaml file produced by Phonopy. It cannot
+handle symmetry, so to produce the appropriate mesh.yaml, you need to
+have MESH_SYMMETRY = .FALSE. in your mesh.conf file. Also, it is
+designed to deal with cm-1 only, so you need (for VASP)
+--factor=521.471 when running phonopy.
+
+**********************************************************************
+
+OUTPUT:
+
+The code produces a file, 'allowed-omega.dat' which contains the
+values of omega, omega' and omega" for each allowed transition. One
+can then plot omega' and omega" against omega in a 2D plot by running
+e.g. xmgrace -nxy allowed-omega.dat (use only points, not lines to
+make the output clear). You should then be able to see if collisions
+are of aaa, aao, aoo, ooo nature.
+
+**********************************************************************
+
+INSTALL:
+
+It is a FORTRAN 90 code and should work with the gnu compiler. There
+is a Makefile, so put in your preferred fortran compiler there and
+type 'make'.
+
+**********************************************************************
+
+FINAL REMARKS:
+
+Imaginary modes are ignored, i.e. set to zero and not included in the
+checks. There is a bit of ambiguity in determining the minimum
+frequency at Gamma, as the three acoustic modes there should be
+zero. I'm still working on that too, so if anything weird happens with
+imaginary modes and/or the three lowest modes at Gamma, let me know!
+
+This code will hopefully be useful if you would like to get an idea of
+how many 3-phonon interactions will be allowed in your system and what
+there nature will be, without having to do the very expensive full
+3-phonon calculation (using phono3py).
+
+Using an MIT licence.
+
+Email me please with all criticisms issues bugs complaints etc!
+
+j.buckeridge@lsbu.ac.uk

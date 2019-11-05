@@ -1,0 +1,9 @@
+The omega, omega', omega" for each allowed transition are included in
+allowed-omega.dat. The output written to standard out is in
+run.out. As a very course grid was used (8x8x8), there were only 3
+unique allowed transitions found. It still took 12 mins to run
+however!
+
+A plot produced using xmgrace is also included, to see how to
+visualise the results. You can see that the transitions are most
+likely: one aaa, two aao (a = acoustic, o = optical).

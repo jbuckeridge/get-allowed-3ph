@@ -1,0 +1,61 @@
+**************************************************************
+
+     333      PPP  H
+        3     P  P H
+       3   -- PPP  HHH   OOO  NNN   OOO   NNN 
+        3     P    H  H O   O N  N O   O  N  N
+     333      P    H  H  OOO  N  N  OOO   N  N
+
+    TTTTT                  SSS     T                SSS
+      T                   S        T               S
+      T   RRR   AAA  NNN   SSS  I TTT I  OOO  NNN   SSS
+      T   R    A   A N  N     S I  T  I O   O N  N     S
+      T   R     AAAA N  N  SSS  I  TT I  OOO  N  N  SSS
+
+
+j.buckeridge@ucl.ac.uk 2019
+**************************************************************
+
+
+Opening mesh.yaml to read input...
+Found mesh.yaml. Checking q mesh...
+Mesh dimensions:   8   8   8
+Reading reciprocal lattice vectors...
+...done
+Checking number of atoms...
+Number of atoms in your system:   2
+There are     3072 (q,omega) points
+
+Reading in list of q-points and frequencies ...
+WARNING: frequencies assumed to be in cm-1!!
+
+Checking data to establish values for energy and momentum checks...
+Minimum frequency in range (away from Gamma):    27.8141272 cm-1
+Maximum frequency in range                  :   275.8918673 cm-1
+Energy differences less than 10^-5 times this max frequency will be deemed to be zero...
+
+Found Gamma point in list at qpt:      1
+We need to set acoustic modes here to zero...
+Setting the   3 lowest modes to zero at Gamma...
+Now checking for imaginary modes...
+Found      0 imaginary modes...
+...done
+
+Finding minimum distance between qpts...
+Found minimum distance between qpts    215 and    223 of     0.2404150 A-1
+Any 2 qpts where the differences between all components are less than half that
+of these two will be deemed to be equal...
+
+Now checking for allowed transitions...
+Total number of allowed q  :       525312
+Total number of transitions:          960
+Phonon decays    :          480
+Phonon collisions:          480
+...done
+
+Removing non-unique transitions from output for plotting..
+Number of unique transitions to plot:       3
+...done
+
+real	12m58.431s
+user	12m57.837s

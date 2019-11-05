@@ -1,0 +1,9 @@
+The mesh.yaml file is the only one needed to run get-allowed-ph-y
+
+The mesh.conf used to create mesh.yaml is provided. It results from a
+phonopy calculation using finite differences and a 4x4x4 supercell of
+the primitive GaAs zinc blende unit cell. The calculation was done
+using the non-analytic correction. The PBEsol functional was used. An
+8x8x8 mesh is used, which is pretty coarse. For useful information, a
+plot of the phonon band structure (produced using the awesome SUMO
+package from SMTG-UCL group) is provided.
