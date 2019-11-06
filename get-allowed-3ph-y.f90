@@ -54,7 +54,7 @@ program get_allowed
   real*8 tmpom1(3), tmpom2(3)
   character*80 str1
   character*1 lbrack, comma, colon
-  logical checkg, checkq(3), checkqtot, checkqsol(3,nmax), checkqoth
+  logical checkg, checkq(3), checkqtot
 !
   pi = acos(-1.d0)
 !
