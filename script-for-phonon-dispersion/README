@@ -1,0 +1,3 @@
+This simple bash script reads the band.yaml file and returns 
+a file disp.dat, that contains the phonon bands along the path
+in the BZ.

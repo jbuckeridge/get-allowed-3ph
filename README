@@ -7,10 +7,11 @@ NOTE:
 This program is a work in process!! It is slow, annoying etc.
 Please bear with me.
 
-It only supports frequencies in cm-1. It cannot handle symmetry.
+It now supports frequencies in cm-1, THz, eV and meV. 
+It cannot handle symmetry.
 
-Future plans: more unit support. Read in band.yaml and produce plot of
-transitions on a phonon band plot. Rewrite in python, add symmetry.
+Future plans: Parallelise the code to speed up operation.
+Rewrite in python, add symmetry.
 Any suggestions? :)
 
 J. Buckeridge (j.buckeridge@lsbu.ac.uk) Nov. 2019
@@ -56,26 +57,92 @@ transition has been found.
 As symmetry is not used, redundancies occur in the output. These are
 checked for and removed.
 
+--------------------
+UNITS:
+
+The default unit for frequency is cm-1, but the units can be specified
+in a file 'unit.dat', which the code will search for. It will 
+recognise cm-1, THz, eV and meV.
+
+--------------------
+BAND STRUCTURE PLOTTING:
+
+The code can also read in a band.yaml file, which it assumes is
+consistent with the mesh.yaml (i.e. is for the same system, but just
+has the frequencies along a high-symmetry line in the BZ. The band and
+mesh files must use the same frequency units). For the allowed 
+transitions that has been determined, it checks if the all q points 
+are included in the BZ path in the band.yaml file. If so, it produces
+a file 'bz-transitions.dat', which contains data to plot lines on a
+phonon band structure diagram. The x-axis, which corresponds to 
+q-points in the BZ, is given in units of "distance" that are included
+in the band.yaml file. 
+
+In the package, I have also included a simple bash script (again which
+is a bit slow), that converts the band.yaml file to a file 'disp.dat'
+which can be plotted in xmgrace. By running 'xmgrace -nxy disp.dat',
+then importing the 'bz-transitions.dat' file (as single source), you 
+can plot the band structure with the lines indicating the allowed
+transitions. The script is called 'lattice-vib-disp.sh'.
+
+---------------------
+JOINT DOS:
+
+The code can calculate the joint density of states (JDOS) for phonons,
+eqns 19 and 22-24 of Togo's paper mentioned above, PRB 91 094306 (2015). 
+It will do so if it finds a file 'temperature.dat', which contains a 
+temperature value. The JDOS N2 depends on the occupations of the modes, 
+hence requires a temperature. The output is written to the file 
+'jdos.dat'. 
+
 **********************************************************************
 
 INPUT:
 
 The code reads in a mesh.yaml file produced by Phonopy. It cannot
 handle symmetry, so to produce the appropriate mesh.yaml, you need to
-have MESH_SYMMETRY = .FALSE. in your mesh.conf file. Also, it is
-designed to deal with cm-1 only, so you need (for VASP)
---factor=521.471 when running phonopy.
+have MESH_SYMMETRY = .FALSE. in your mesh.conf file.
+
+The default frequency unit is cm-1, but the units can be specified
+by including the unit.dat file, in which you can write THz, eV, meV
+or cm-1.
+
+A band.yaml file can be read in, and the allowed transitions are 
+checked to see if the (q,omega) points are included in the list in 
+that file.
+
+To calculate the JDOS, the file temperature.dat must be present. In
+it the temperature is given, which is necessary to compute the N2
+JDOS (see Eq. 22-24 of Togo's paper PRB 91 094306 (2015)).
 
 **********************************************************************
 
 OUTPUT:
 
 The code produces a file, 'allowed-omega.dat' which contains the
-values of omega, omega' and omega" for each allowed transition. One
-can then plot omega' and omega" against omega in a 2D plot by running
-e.g. xmgrace -nxy allowed-omega.dat (use only points, not lines to
+values of omega, omega' and omega" for each allowed transition, as 
+well as the degeneracy of the transition (which can be large for a 
+highly symmetric system, as there may be many equivalent q-points in
+the mesh). One can then plot omega' and omega" against omega in a 
+2D plot by extracting the first three columns and running e.g. 
+xmgrace -nxy allowed-omega-extract.dat (use only points, not lines to
 make the output clear). You should then be able to see if collisions
-are of aaa, aao, aoo, ooo nature.
+are of aaa, aao, aoo, ooo nature. The degeneracies could be added as
+a heat map using other plotting software.
+
+If band.yaml was included, and some transitions were found that involved
+(q,omega) points in the range of the band structure, a file containing
+lines to be plotted on top of the band structure is outputted, called
+'bz-transitions.dat'. The x-axis units are distance along the BZ path
+(as given in the band.yaml file), while the y-axis is phonon frequency. 
+The bash script 'lattice-vib-disp.sh' produces a file 'disp.dat' from
+the band.yaml file, which is compatible with the 'bz-transitions.dat'
+file, so both can be plotted together. You will need to put in the 
+high symmetry points in the BZ path yourself.
+
+If 'temperature.dat' is present, then the JDOS will be calculated and 
+output to the file 'jdos.dat'. The JDOS are given for each value of
+q and omega.
 
 **********************************************************************
 

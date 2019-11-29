@@ -17,45 +17,77 @@ j.buckeridge@ucl.ac.uk 2019
 **************************************************************
 
 
+Checking for unit.dat file to read in units...
+Found unit.dat file - attempting to read units...
+Found units of cm-1...
+
 Opening mesh.yaml to read input...
 Found mesh.yaml. Checking q mesh...
-Mesh dimensions:   8   8   8
+Mesh dimensions:  10  10  10
 Reading reciprocal lattice vectors...
 ...done
 Checking number of atoms...
-Number of atoms in your system:   2
-There are     3072 (q,omega) points
+Number of atoms in your system:   3
+There are     9000 (q,omega) points
 
 Reading in list of q-points and frequencies ...
-WARNING: frequencies assumed to be in cm-1!!
+Found temperature.dat file - attempting to read temperature...
+Found temperature =    300.000000 K
+JDOS will be calculated and written to file jdos.dat
+NOTE: JDOS calculated here should be scaled by 1/N
+
 
 Checking data to establish values for energy and momentum checks...
-Minimum frequency in range (away from Gamma):    27.8141272 cm-1
-Maximum frequency in range                  :   275.8918673 cm-1
+Minimum frequency in range (away from Gamma):    21.4194206 cm-1 
+Maximum frequency in range                  :   245.1951976 cm-1 
 Energy differences less than 10^-5 times this max frequency will be deemed to be zero...
 
 Found Gamma point in list at qpt:      1
 We need to set acoustic modes here to zero...
 Setting the   3 lowest modes to zero at Gamma...
 Now checking for imaginary modes...
-Found      0 imaginary modes...
 ...done
 
 Finding minimum distance between qpts...
-Found minimum distance between qpts    215 and    223 of     0.2404150 A-1
+Found minimum distance between qpts    248 and    258 of     0.1827992 A-1
 Any 2 qpts where the differences between all components are less than half that
 of these two will be deemed to be equal...
 
+Looking for band.yaml to read input...
+Found band.yaml. Reading in data...
+Number of qpts in BZ path:   1204
+Reading reciprocal lattice vectors from band.yaml...
+...done
+
+Reading in BZ path q-points and frequencies ...
+WARNING: frequencies assumed to be in cm-1!!
+...done
+
+Checking for Gamma point in BZ path in band.yaml...
+Gamma point found in BZ list, 1st occurrence at qpt:      1
+Different frequency at Gamma b/n band.yaml and mesh.yaml for mode:    6
+Different frequency at Gamma b/n band.yaml and mesh.yaml for mode:    9
+(I am assuming that non-analytical correction has been used!
+Mesh calcs do not get the LO-TO splitting at Gamma - so we
+will make the Gamma point frequencies for the mesh equal to
+those of the band calculation...)
+
+Checking for equivalent qpts between BZ list and mesh qpts...
+(by comparing frequencies, watch out if you have BZ directions
+that have zero dispersion for ALL bands)
+Total equivalences between BZ qpts and mesh qpts:     124
+
 Now checking for allowed transitions...
-Total number of allowed q  :       525312
-Total number of transitions:          960
-Phonon decays    :          480
-Phonon collisions:          480
+Total number of conserved q:      2002000
+Total number of transitions:        11088
+Phonon decays    :         5544
+Phonon collisions:         5544
+...done
+
+Now writing JDOS to file (this could be a big one!)...
 ...done
 
 Removing non-unique transitions from output for plotting..
-Number of unique transitions to plot:       3
+Number of unique transitions to plot:      35
+Number of transitions in bz plot    :       3
 ...done
-
-real	12m58.431s
-user	12m57.837s
