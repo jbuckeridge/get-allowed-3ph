@@ -659,7 +659,6 @@ program get_allowed
 !
      write(*,*)
      write(*,'(a)') "Reading in BZ path q-points and frequencies ..."
-     write(*,'(a)') "WARNING: frequencies assumed to be in cm-1!!"
 !
 ! Allocate memory to store the qpt and omega arrays
 !
